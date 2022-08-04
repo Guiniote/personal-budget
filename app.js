@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors')
 require('dotenv').config()
 
-const indexRouter = require('./routes/index')
+const indexRouter = require('./routes/indexRoutes')
 
 const port = process.env.PORT || 3000
 
