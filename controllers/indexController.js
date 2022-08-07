@@ -1,14 +1,15 @@
 const createHttpError = require('http-errors')
 const {
   getAllTransactions,
-  maxId,
   createNewTransaction,
   deleteOneTransaction,
+  updateTransaction,
+  getHomeInfo,
 } = require('../services/indexServices')
 const { endpointResponse } = require('../helpers/success')
 const { catchAsync } = require('../helpers/catchAsync')
 
-// example of a controller. First call the service, then build the controller method
+// Find all the transactions in the database endpoint
 module.exports = {
   allTransactions: catchAsync(async (req, res, next) => {
     try {
@@ -21,52 +22,83 @@ module.exports = {
     } catch (error) {
       const httpError = createHttpError(
         error.statusCode,
-        `[Error retrieving index] - [index - GET]: ${error.message}`,
+        `[Error retrieving transactions] - [index - GET]: ${error.message}`,
       )
       next(httpError)
     }
   }),
 
+  // Create a transaction endpoint
   newTransaction: catchAsync(async (req, res, next) => {
     try {
-      const itemCreated = await createNewTransaction({
-        id: (await maxId()) + 1,
-        user: req.body.user,
-        concept: req.body.concept,
-        category: req.body.category,
-        amount: req.body.amount,
-        date: req.body.date,
-        type: req.body.type,
+      await createNewTransaction({
+        ...req.body,
       })
       endpointResponse({
         res,
         code: 201,
         message: 'Transaction created successfully',
-        body: itemCreated,
       })
     } catch (error) {
       const httpError = createHttpError(
         error.statusCode,
-        `[Error retrieving index] - [index - GET]: ${error.message}`,
+        `[Error creating transaction] - [index - POST]: ${error.message}`,
       )
       next(httpError)
     }
   }),
 
+  // Delete a transaction endpoint
   deleteTransaction: catchAsync(async (req, res, next) => {
     try {
-      const id = Number(req.params.id)
-      const itemDeleted = await deleteOneTransaction(id)
+      await deleteOneTransaction(Number(req.params.id))
       endpointResponse({
         res,
         code: 204,
         message: 'Transaction deleted successfully',
-        body: itemDeleted,
       })
     } catch (error) {
       const httpError = createHttpError(
         error.statusCode,
-        `[Error retrieving index] - [index - GET]: ${error.message}`,
+        `[Error deleting transaction] - [index - DEL]: ${error.message}`,
+      )
+      next(httpError)
+    }
+  }),
+
+  // Update a transaction endpoint
+  updateTransaction: catchAsync(async (req, res, next) => {
+    try {
+      await updateTransaction({
+        id: req.params.id,
+        ...req.body,
+      })
+      endpointResponse({
+        res,
+        message: 'Transaction updated successfully',
+      })
+    } catch (error) {
+      const httpError = createHttpError(
+        error.statusCode,
+        `[Error updating transaction] - [index - PATCH]: ${error.message}`,
+      )
+      next(httpError)
+    }
+  }),
+
+  // Show home requested info
+  homeInfo: catchAsync(async (req, res, next) => {
+    try {
+      const response = await getHomeInfo()
+      endpointResponse({
+        res,
+        message: 'All info retrieved successfully',
+        body: response,
+      })
+    } catch (error) {
+      const httpError = createHttpError(
+        error.statusCode,
+        `[Error retrieving info] - [index - GET]: ${error.message}`,
       )
       next(httpError)
     }

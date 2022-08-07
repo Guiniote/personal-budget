@@ -1,77 +1,128 @@
+const { Op } = require('sequelize')
 const { ErrorObject } = require('../helpers/error')
+const { transactionFormat } = require('../helpers/transactionFormat')
+const { Transactions } = require('../database/models')
 
-let movements = [
-  {
-    id: 1,
-    user: 'German',
-    concept: 'Sueldo',
-    category: 'Ingresos fijos',
-    amount: 2000,
-    date: '01/08/2022',
-    type: 'Ingreso',
-  },
-  {
-    id: 2,
-    user: 'German',
-    concept: 'Galletitas',
-    category: 'Alimentos y Bebidas',
-    amount: 150,
-    date: '02/08/2022',
-    type: 'Egreso',
-  },
-  {
-    id: 3,
-    user: 'German',
-    concept: 'Coca Cola',
-    category: 'Alimentos y Bebidas',
-    amount: 180,
-    date: '02/08/2022',
-    type: 'Egreso',
-  },
-  {
-    id: 4,
-    user: 'German',
-    concept: 'Subte',
-    category: 'Transporte',
-    amount: 40,
-    date: '02/08/2022',
-    type: 'Egreso',
-  },
-]
-
-// example of a service
+// Find all the transactions in the database and format the info the way needed
 exports.getAllTransactions = async () => {
   try {
-    const getIndex = await movements
-    return getIndex
+    const allTransactions = []
+    await Transactions.findAll({
+      include: ['user', 'category', 'transactionType'],
+    }).then((transactions) => {
+      transactions.map((transaction) => {
+        allTransactions.push(transactionFormat(transaction))
+        return 0
+      })
+    })
+    return allTransactions
   } catch (error) {
     throw new ErrorObject(error.message, error.statusCode || 500)
   }
 }
 
-exports.maxId = () => {
+// Create a transaction in the database
+exports.createNewTransaction = async (newTransaction) => {
   try {
-    const ids = movements.map((movement) => movement.id)
-    const maxId = Math.max(...ids)
-    return maxId
+    await Transactions.create(newTransaction)
+    return
   } catch (error) {
     throw new ErrorObject(error.message, error.statusCode || 500)
   }
 }
 
-exports.createNewTransaction = async (newMovement) => {
+// Delete a transaction in the database
+exports.deleteOneTransaction = async (transactionId) => {
   try {
-    movements = [...movements, newMovement]
-    return movements
+    await Transactions.destroy({
+      where: { id: transactionId },
+    })
+    return
   } catch (error) {
     throw new ErrorObject(error.message, error.statusCode || 500)
   }
 }
 
-exports.deleteOneTransaction = async (id) => {
+// Update a transaction in the database
+exports.updateTransaction = async (transaction) => {
   try {
-    movements = movements.filter((movement) => movement.id !== id)
-    return movements
+    await Transactions.update(
+      {
+        userId: transaction.userId,
+        concept: transaction.concept,
+        categoryId: transaction.categoryId,
+        amount: transaction.amount,
+        date: transaction.date,
+      },
+      {
+        where: { id: transaction.id },
+      },
+    )
+    return
+  } catch (error) {
+    throw new ErrorObject(error.message, error.statusCode || 500)
+  }
+}
+
+// Get every income in the database
+exports.getIncomes = async () => {
+  try {
+    return await Transactions.sum('amount', {
+      where: { transactionTypeId: { [Op.eq]: 1 } },
+    })
+  } catch (error) {
+    throw new ErrorObject(error.message, error.statusCode || 500)
+  }
+}
+
+// Get every expense in the database
+exports.getExpenses = async () => {
+  try {
+    return await Transactions.sum('amount', {
+      where: { transactionTypeId: { [Op.eq]: 2 } },
+    })
+  } catch (error) {
+    throw new ErrorObject(error.message, error.statusCode || 500)
+  }
+}
+
+// Calculate the actual balance
+exports.actualBalance = async () => {
+  try {
+    return (await this.getIncomes()) - (await this.getExpenses())
+  } catch (error) {
+    throw new ErrorObject(error.message, error.statusCode || 500)
+  }
+}
+
+// Get last 10 transactions
+exports.getLastTenTransactions = async () => {
+  try {
+    const lastTenTransactions = []
+    await Transactions.findAll({
+      include: ['user', 'category', 'transactionType'],
+      limit: 10,
+      order: [['createdAt', 'DESC']],
+    }).then((transactions) => {
+      transactions.map((transaction) => {
+        lastTenTransactions.push(transactionFormat(transaction))
+        return 0
+      })
+    })
+    return lastTenTransactions
+  } catch (error) {
+    throw new ErrorObject(error.message, error.statusCode || 500)
+  }
+}
+
+// Get home info requested, such as actual balance and last 10 transactions
+exports.getHomeInfo = async () => {
+  try {
+    const homeInfo = {
+      actualBalance: await this.actualBalance(),
+      lastTenTransactions: await this.getLastTenTransactions(),
+    }
+    return homeInfo
   } catch (error) {
     throw new ErrorObject(error.message, error.statusCode || 500)
   }
