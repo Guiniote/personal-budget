@@ -1,13 +1,13 @@
 {
-  "name": "personal-budget-back",
+  "name": "personal-budget",
   "version": "1.0.0",
   "description": "App to help your personal finances. Challenge app for Alkemy",
   "author": "guiniote",
   "license": "ISC",
-  "homepage": "https://github.com/guiniote/personal-budget-back#readme",
+  "homepage": "https://github.com/guiniote/personal-budget#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/guiniote/personal-budget-back"
+    "url": "https://github.com/guiniote/personal-budget"
   },
   "scripts": {
     "start": "node app.js",
