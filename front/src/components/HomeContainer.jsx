@@ -1,36 +1,30 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 // import Balance from './Balance'
 import TransactionList from './TransactionList'
 import Loader from './Loader'
 
 function HomeContainer() {
-  const [actualBalance, setActualBalance] = useState(null)
-  const [lastTenTransactions, setLastTenTransactions] = useState(null)
+  // const [actualBalance, setActualBalance] = useState(null)
+  // const [lastTenTransactions, setLastTenTransactions] = useState(null)
+  const [answer, setAnswer] = useState(null)
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_API_DOMAIN)
-      .then((response) => response.json())
-      .then(
-        (data) => {
-          setActualBalance(data.body.actualBalance)
-          setLastTenTransactions(data.body.lastTenTransactions)
-        },
-        (err) => {
-          alert(`Error: ${err}`)
-        },
-      )
-      .catch((err) => {
-        alert(`Error no esperado: ${err}`)
-      })
+    try {
+      axios
+        .get(process.env.REACT_APP_API_DOMAIN)
+        .then((response) => setAnswer(response.data))
+    } catch (err) {
+      console.error(`Error: ${err}`)
+    }
   }, [])
 
-  console.log(lastTenTransactions)
-  console.log(actualBalance)
+  console.log(answer)
 
   return (
     <>
       {/* <Balance balance={actualBalance} /> */}
-      {lastTenTransactions ? (
+      {/* {lastTenTransactions ? (
         lastTenTransactions.length > 0 ? (
           <TransactionList transacionList={lastTenTransactions} />
         ) : (
@@ -38,7 +32,8 @@ function HomeContainer() {
         )
       ) : (
         <Loader loading={true} />
-      )}
+      )} */}
+      <p>asdasd</p>
     </>
   )
 }
