@@ -17,7 +17,7 @@ function HomeContainer() {
         },
         (err) => {
           alert(`Error: ${err}`)
-        }
+        },
       )
       .catch((err) => {
         alert(`Error no esperado: ${err}`)
