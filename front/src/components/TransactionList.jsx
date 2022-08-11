@@ -1,17 +1,32 @@
 import React from 'react'
-import Transaction from './Transaction'
+import TransactionRow from './TransactionRow'
 import Loader from './Loader'
 
 function TransactionList({ transactionList }) {
   return (
     <div>
-      {transactionList ? (
+      <table>
+        <thead>
+          <tr>
+            <th>Categoría</th>
+            <th>Concepto</th>
+            <th>Importe</th>
+            <th>Fecha</th>
+            <th>Usuario</th>
+            <th>Tipo</th>
+          </tr>
+        </thead>
+        {transactionList.map((transaction) => (
+          <TransactionRow key={transaction.id} transaction={transaction} />
+        ))}
+      </table>
+      {/* {transactionList ? (
         transactionList.map((transaction) => (
           <Transaction key={transaction.id} transaction={transaction} />
         ))
       ) : (
         <Loader loading />
-      )}
+      )} */}
     </div>
   )
 }

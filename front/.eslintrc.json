@@ -3,9 +3,6 @@
     "browser": true,
     "es6": true
   },
-  "extends": [
-    "airbnb" // eslint-config-airbnb
-  ],
   "settings": {
     "react": {
       "version": "detect"
@@ -32,7 +29,7 @@
       }
     ],
     "react/jsx-props-no-spreading": "off",
-    "no-console": "error",
+    "no-console": "warn",
     "semi": "off",
     "no-param-reassign": "off",
     "linebreak-style": 0,

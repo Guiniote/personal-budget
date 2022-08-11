@@ -1,40 +1,37 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-// import Balance from './Balance'
+import { Link } from 'react-router-dom'
+import Balance from './Balance'
 import TransactionList from './TransactionList'
-import Loader from './Loader'
+// import Loader from './Loader'
 
 function HomeContainer() {
-  // const [actualBalance, setActualBalance] = useState(null)
-  // const [lastTenTransactions, setLastTenTransactions] = useState(null)
-  const [answer, setAnswer] = useState(null)
+  const [actualBalance, setActualBalance] = useState(null)
+  const [lastTenTransactions, setLastTenTransactions] = useState(null)
 
   useEffect(() => {
     try {
-      axios
-        .get(process.env.REACT_APP_API_DOMAIN)
-        .then((response) => setAnswer(response.data))
+      axios.get(process.env.REACT_APP_API_DOMAIN).then((response) => {
+        setActualBalance(response.data.body.actualBalance)
+        setLastTenTransactions(response.data.body.lastTenTransactions)
+      })
     } catch (err) {
       console.error(`Error: ${err}`)
     }
   }, [])
 
-  console.log(answer)
-
   return (
-    <>
-      {/* <Balance balance={actualBalance} /> */}
-      {/* {lastTenTransactions ? (
-        lastTenTransactions.length > 0 ? (
-          <TransactionList transacionList={lastTenTransactions} />
-        ) : (
-          <h4>Lo siento, no hay transacciones aún</h4>
-        )
+    <div>
+      {actualBalance ? <Balance balance={actualBalance} /> : <h4>0</h4>}
+      {lastTenTransactions ? (
+        <TransactionList transactionList={lastTenTransactions} />
       ) : (
-        <Loader loading={true} />
-      )} */}
-      <p>asdasd</p>
-    </>
+        <h4>0</h4>
+      )}
+      <Link to={`/transaction`}>
+        <button>Ver todos los movimientos</button>
+      </Link>
+    </div>
   )
 }
 
