@@ -1,7 +1,45 @@
 const { Op } = require('sequelize')
 const { ErrorObject } = require('../helpers/error')
 const { transactionFormat } = require('../helpers/transactionFormat')
-const { Transactions } = require('../database/models')
+const { Transactions, Categories, TransactionTypes } = require('../database/models')
+
+// Get all categories
+exports.getAllCategories = async () => {
+  try {
+    const categories = []
+    await Categories.findAll().then((categoriesData) => {
+      categoriesData.map((category) => {
+        categories.push({
+          id: category.id,
+          categoryName: category.categoryName,
+        })
+        return 0
+      })
+    })
+    return categories
+  } catch (error) {
+    throw new ErrorObject(error.message, error.statusCode || 500)
+  }
+}
+
+// Get all types of transactions
+exports.getAllTransactionTypes = async () => {
+  try {
+    const transactionTypes = []
+    await TransactionTypes.findAll().then((transactionTypesData) => {
+      transactionTypesData.map((transactionType) => {
+        transactionTypes.push({
+          id: transactionType.id,
+          transactionTypeName: transactionType.transactionTypeName,
+        })
+        return 0
+      })
+    })
+    return transactionTypes
+  } catch (error) {
+    throw new ErrorObject(error.message, error.statusCode || 500)
+  }
+}
 
 // Find all the transactions in the database and format the info the way needed
 exports.getAllTransactions = async () => {
@@ -16,6 +54,20 @@ exports.getAllTransactions = async () => {
       })
     })
     return allTransactions
+  } catch (error) {
+    throw new ErrorObject(error.message, error.statusCode || 500)
+  }
+}
+
+// Structure for transactions page information
+exports.getTransactions = async () => {
+  try {
+    const transactionsInfo = {
+      categories: await this.getAllCategories(),
+      transactionTypes: await this.getAllTransactionTypes(),
+      allTransactions: await this.getAllTransactions(),
+    }
+    return transactionsInfo
   } catch (error) {
     throw new ErrorObject(error.message, error.statusCode || 500)
   }
@@ -87,7 +139,7 @@ exports.getExpenses = async () => {
 }
 
 // Calculate the actual balance
-exports.actualBalance = async () => {
+exports.getActualBalance = async () => {
   try {
     return (await this.getIncomes()) - (await this.getExpenses())
   } catch (error) {
@@ -115,11 +167,11 @@ exports.getLastTenTransactions = async () => {
   }
 }
 
-// Get home info requested, such as actual balance and last 10 transactions
+// Structure home info requested, such as actual balance and last 10 transactions
 exports.getHomeInfo = async () => {
   try {
     const homeInfo = {
-      actualBalance: await this.actualBalance(),
+      actualBalance: await this.getActualBalance(),
       lastTenTransactions: await this.getLastTenTransactions(),
     }
     return homeInfo

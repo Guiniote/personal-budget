@@ -1,6 +1,6 @@
 const createHttpError = require('http-errors')
 const {
-  getAllTransactions,
+  getTransactions,
   createNewTransaction,
   deleteOneTransaction,
   updateTransaction,
@@ -13,7 +13,7 @@ const { catchAsync } = require('../helpers/catchAsync')
 module.exports = {
   allTransactions: catchAsync(async (req, res, next) => {
     try {
-      const response = await getAllTransactions()
+      const response = await getTransactions()
       endpointResponse({
         res,
         message: 'All transactions retrieved successfully',
