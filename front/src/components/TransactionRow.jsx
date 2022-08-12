@@ -5,12 +5,12 @@ function Transaction({ transaction }) {
     <>
       <tbody>
         <tr key={transaction.id}>
-          <td>{transaction.categoryId}</td>
+          <td>{transaction.category}</td>
           <td>{transaction.concept}</td>
           <td>{transaction.amount}</td>
           <td>{transaction.date}</td>
-          <td>{transaction.userId}</td>
-          <td>{transaction.transactionTypeId}</td>
+          <td>{transaction.user}</td>
+          <td>{transaction.transactionType}</td>
         </tr>
       </tbody>
     </>

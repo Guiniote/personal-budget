@@ -20,13 +20,6 @@ function TransactionList({ transactionList }) {
           <TransactionRow key={transaction.id} transaction={transaction} />
         ))}
       </table>
-      {/* {transactionList ? (
-        transactionList.map((transaction) => (
-          <Transaction key={transaction.id} transaction={transaction} />
-        ))
-      ) : (
-        <Loader loading />
-      )} */}
     </div>
   )
 }
