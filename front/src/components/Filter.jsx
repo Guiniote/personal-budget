@@ -1,17 +1,29 @@
 import React from 'react'
 
-function Filter(data) {
+function Filter({ name, title, options, onFilter }) {
   return (
     <div>
-      <p>{data.title}</p>
-      <select name={`${data.name}Filter`}>
+      <p>{title}</p>
+      <select name={`${name}Filter`} id={`${name}Filter`}>
         <option value=""></option>
-        {data.options
-          ? data.options.map((option) => (
-              <option value={option.id}>{option.name}</option>
+        {options
+          ? options.map((option) => (
+              <option value={option.name} key={option.id}>
+                {option.name}
+              </option>
             ))
           : ''}
       </select>
+      <button
+        onClick={
+          document.querySelector(`#${name}Filter`)
+            ? () =>
+                onFilter(name, document.querySelector(`#${name}Filter`).value)
+            : () => alert('No existen filtros')
+        }
+      >
+        Aplicar
+      </button>
     </div>
   )
 }
