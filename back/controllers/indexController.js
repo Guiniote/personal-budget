@@ -5,6 +5,7 @@ const {
   deleteOneTransaction,
   updateTransaction,
   getHomeInfo,
+  getNewFormInfo,
 } = require('../services/indexServices')
 const { endpointResponse } = require('../helpers/success')
 const { catchAsync } = require('../helpers/catchAsync')
@@ -28,8 +29,26 @@ module.exports = {
     }
   }),
 
-  // Create a transaction endpoint
+  // Send categories and transaction types to the new transaction's form
   newTransaction: catchAsync(async (req, res, next) => {
+    try {
+      const response = await getNewFormInfo()
+      endpointResponse({
+        res,
+        message: 'Info retrieved successfully',
+        body: response,
+      })
+    } catch (error) {
+      const httpError = createHttpError(
+        error.statusCode,
+        `[Error retrieving info] - [index - GET]: ${error.message}`,
+      )
+      next(httpError)
+    }
+  }),
+
+  // Create a transaction endpoint
+  submitNewTransaction: catchAsync(async (req, res, next) => {
     try {
       await createNewTransaction({
         ...req.body,

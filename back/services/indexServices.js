@@ -11,7 +11,7 @@ exports.getAllCategories = async () => {
       categoriesData.map((category) => {
         categories.push({
           id: category.id,
-          categoryName: category.categoryName,
+          name: category.categoryName,
         })
         return 0
       })
@@ -30,7 +30,7 @@ exports.getAllTransactionTypes = async () => {
       transactionTypesData.map((transactionType) => {
         transactionTypes.push({
           id: transactionType.id,
-          transactionTypeName: transactionType.transactionTypeName,
+          name: transactionType.transactionTypeName,
         })
         return 0
       })
@@ -68,6 +68,19 @@ exports.getTransactions = async () => {
       allTransactions: await this.getAllTransactions(),
     }
     return transactionsInfo
+  } catch (error) {
+    throw new ErrorObject(error.message, error.statusCode || 500)
+  }
+}
+
+// Get categories and transactions types for the new transaction's form
+exports.getNewFormInfo = async () => {
+  try {
+    const newFormInfo = {
+      categories: await this.getAllCategories(),
+      transactionTypes: await this.getAllTransactionTypes(),
+    }
+    return newFormInfo
   } catch (error) {
     throw new ErrorObject(error.message, error.statusCode || 500)
   }
