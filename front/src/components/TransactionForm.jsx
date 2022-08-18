@@ -1,38 +1,27 @@
 import React from 'react'
-import { Formik, Field, Form, ErrorMessage } from 'formik'
-import * as Yup from 'yup'
+import { Formik, Form } from 'formik'
+import FormInputField from './FormInputField'
+import FormSelectField from './FormSelectField'
 
 function TransactionForm({
+  title,
   categories,
   transactionTypes,
   initialValues,
+  validationSchema,
   onSubmitFormType,
+  button,
 }) {
   return (
     <div>
-      <h1>Nuevo movimiento</h1>
+      <h1>{title}</h1>
       <Formik
         initialValues={initialValues}
-        validationSchema={Yup.object({
-          categoryId: Yup.mixed().required('Obligatorio'),
-          concept: Yup.string()
-            .min(3, 'Debe tener al menos 3 caracteres')
-            .max(40, 'Debe tener como mucho ${max} caracteres')
-            .required('Obligatorio'),
-          amount: Yup.number()
-            .positive('El valor debe ser positivo')
-            .required('Obligatorio'),
-          date: Yup.date()
-            .max(new Date(), 'No se pueden cargar gastos futuros')
-            .required('Obligatorio'),
-          userId: Yup.number(),
-          transactionTypeId: Yup.mixed().required('Obligatorio'),
-        })}
+        validationSchema={validationSchema}
         onSubmit={(values) => onSubmitFormType(values)}
       >
         <Form>
-          <label htmlFor="categoryId">Categoría</label>
-          <Field as="select" name="categoryId">
+          <FormSelectField label="Categoría" name="categoryId">
             <option value="" disabled defaultValue hidden>
               Seleccione una categoría
             </option>
@@ -43,27 +32,17 @@ function TransactionForm({
                   </option>
                 ))
               : ''}
-          </Field>
-          <ErrorMessage name="categoryId" />
+          </FormSelectField>
 
-          <label htmlFor="concept">Concepto</label>
-          <Field name="concept" type="text" />
-          <ErrorMessage name="concept" />
+          <FormInputField label="Concepto" name="concept" type="text" />
 
-          <label htmlFor="amount">Importe</label>
-          <Field name="amount" type="number" />
-          <ErrorMessage name="amount" />
+          <FormInputField label="Importe" name="amount" type="number" />
 
-          <label htmlFor="date">Fecha</label>
-          <Field name="date" type="date" />
-          <ErrorMessage name="date" />
+          <FormInputField label="Fecha" name="date" type="date" />
 
-          <label htmlFor="userId">Usuario</label>
-          <Field name="userId" type="number" />
-          <ErrorMessage name="userId" />
+          <FormInputField label="Usuario" name="userId" type="number" />
 
-          <label htmlFor="transactionTypeId">Tipo</label>
-          <Field as="select" name="transactionTypeId">
+          <FormSelectField label="Tipo" name="transactionTypeId">
             <option value="" disabled defaultValue hidden>
               Seleccione un tipo
             </option>
@@ -74,10 +53,9 @@ function TransactionForm({
                   </option>
                 ))
               : ''}
-          </Field>
-          <ErrorMessage name="transactionTypeId" />
+          </FormSelectField>
 
-          <button type="submit">Crear</button>
+          <button type="submit">{button}</button>
         </Form>
       </Formik>
     </div>

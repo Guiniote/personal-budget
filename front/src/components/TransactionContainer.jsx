@@ -50,13 +50,21 @@ function TransactionContainer() {
 
   return (
     <div>
+      <div>
+        <ul type="none">
+          <li onClick={() => filter('transactionType', '')}>Todos</li>
+          {transactionTypes &&
+            transactionTypes.map((transactionType, index) => (
+              <li
+                key={index}
+                onClick={() => filter('transactionType', transactionType.name)}
+              >
+                {transactionType.name}
+              </li>
+            ))}
+        </ul>
+      </div>
       <div className="Filters">
-        <Filter
-          name="transactionType"
-          title="Tipo de Transaccion"
-          options={transactionTypes}
-          onFilter={filter}
-        />
         <Filter
           name="category"
           title="Categoría"

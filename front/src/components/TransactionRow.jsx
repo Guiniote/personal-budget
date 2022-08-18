@@ -20,12 +20,14 @@ function Transaction({ transaction, onDelete }) {
           <td>{realDate}</td>
           <td>{transaction.user}</td>
           <td>{transaction.transactionType}</td>
-          <td>
-            <button onClick={() => onDelete(transaction.id)}>Borrar</button>
-            <Link to={`/transaction/${transaction.id}`}>
-              <button>Editar</button>
-            </Link>
-          </td>
+          {onDelete && (
+            <td>
+              <button onClick={() => onDelete(transaction.id)}>Borrar</button>
+              <Link to={`/transaction/${transaction.id}`}>
+                <button>Editar</button>
+              </Link>
+            </td>
+          )}
         </tr>
       </tbody>
     </>
