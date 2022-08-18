@@ -2,7 +2,7 @@ import React from 'react'
 import TransactionRow from './TransactionRow'
 import Loader from './Loader'
 
-function TransactionList({ transactionList }) {
+function TransactionList({ transactionList, onDelete }) {
   return (
     <div>
       <table>
@@ -14,10 +14,15 @@ function TransactionList({ transactionList }) {
             <th>Fecha</th>
             <th>Usuario</th>
             <th>Tipo</th>
+            <th></th>
           </tr>
         </thead>
         {transactionList.map((transaction) => (
-          <TransactionRow key={transaction.id} transaction={transaction} />
+          <TransactionRow
+            key={transaction.id}
+            transaction={transaction}
+            onDelete={onDelete}
+          />
         ))}
       </table>
     </div>

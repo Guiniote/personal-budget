@@ -22,7 +22,7 @@ function TransactionContainer() {
     } catch (err) {
       console.error(`Error: ${err}`)
     }
-  }, [])
+  }, [transactionsStored])
 
   const filter = (filterName, filterOption) => {
     let transactionsFiltered = []
@@ -33,6 +33,18 @@ function TransactionContainer() {
       setTransactions(transactionsFiltered)
     } else {
       setTransactions(transactionsStored)
+    }
+  }
+
+  const deleteTransaction = (transactionId) => {
+    try {
+      confirm('Está seguro de que quiere borrar la transaccion?')
+        ? axios.delete(
+            `${process.env.REACT_APP_API_DOMAIN}/transaction/${transactionId}`,
+          )
+        : ''
+    } catch (err) {
+      console.error(`Error: ${err}`)
     }
   }
 
@@ -54,9 +66,15 @@ function TransactionContainer() {
       </div>
       <div className="transactionsTable">
         {transactions ? (
-          <TransactionList transactionList={transactions} />
+          <TransactionList
+            transactionList={transactions}
+            onDelete={deleteTransaction}
+          />
         ) : transactionsStored ? (
-          <TransactionList transactionList={transactionsStored} />
+          <TransactionList
+            transactionList={transactionsStored}
+            onDelete={deleteTransaction}
+          />
         ) : (
           ''
         )}

@@ -1,39 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
 
-function NewTransaction() {
-  const [categories, setCategories] = useState(null)
-  const [transactionTypes, setTransactionTypes] = useState(null)
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    try {
-      axios
-        .get(`${process.env.REACT_APP_API_DOMAIN}/transaction/new`)
-        .then((response) => {
-          setCategories(response.data.body.categories)
-          setTransactionTypes(response.data.body.transactionTypes)
-        })
-    } catch (err) {
-      console.error(`Error: ${err}`)
-    }
-  }, [])
-
+function TransactionForm({
+  categories,
+  transactionTypes,
+  initialValues,
+  onSubmitFormType,
+}) {
   return (
     <div>
       <h1>Nuevo movimiento</h1>
       <Formik
-        initialValues={{
-          categoryId: '',
-          concept: '',
-          amount: '',
-          date: '',
-          userId: '',
-          transactionTypeId: '',
-        }}
+        initialValues={initialValues}
         validationSchema={Yup.object({
           categoryId: Yup.mixed().required('Obligatorio'),
           concept: Yup.string()
@@ -49,22 +28,7 @@ function NewTransaction() {
           userId: Yup.number(),
           transactionTypeId: Yup.mixed().required('Obligatorio'),
         })}
-        onSubmit={(values) => {
-          try {
-            axios
-              .post(`${process.env.REACT_APP_API_DOMAIN}/transaction/new`, {
-                userId: values.userId,
-                categoryId: values.categoryId,
-                concept: values.concept,
-                amount: values.amount,
-                date: values.date,
-                transactionTypeId: values.transactionTypeId,
-              })
-              .then(() => navigate('/transaction'))
-          } catch (err) {
-            console.error(`Error: ${err}`)
-          }
-        }}
+        onSubmit={(values) => onSubmitFormType(values)}
       >
         <Form>
           <label htmlFor="categoryId">Categoría</label>
@@ -120,4 +84,4 @@ function NewTransaction() {
   )
 }
 
-export default NewTransaction
+export default TransactionForm

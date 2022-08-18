@@ -6,12 +6,13 @@ const {
   updateTransaction,
   getHomeInfo,
   getNewFormInfo,
+  getOneTransaction,
 } = require('../services/indexServices')
 const { endpointResponse } = require('../helpers/success')
 const { catchAsync } = require('../helpers/catchAsync')
 
-// Find all the transactions in the database endpoint
 module.exports = {
+  // Find all the transactions in the database
   allTransactions: catchAsync(async (req, res, next) => {
     try {
       const response = await getTransactions()
@@ -24,6 +25,24 @@ module.exports = {
       const httpError = createHttpError(
         error.statusCode,
         `[Error retrieving transactions] - [index - GET]: ${error.message}`,
+      )
+      next(httpError)
+    }
+  }),
+
+  // Get a particular transaction
+  getTransaction: catchAsync(async (req, res, next) => {
+    try {
+      const response = await getOneTransaction(req.params.id)
+      endpointResponse({
+        res,
+        message: 'Transaction retrieved successfully',
+        body: response,
+      })
+    } catch (error) {
+      const httpError = createHttpError(
+        error.statusCode,
+        `[Error retrieving transaction] - [index - GET]: ${error.message}`,
       )
       next(httpError)
     }

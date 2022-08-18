@@ -73,6 +73,18 @@ exports.getTransactions = async () => {
   }
 }
 
+// Get a single transaction
+exports.getOneTransaction = async (transactionId) => {
+  try {
+    const transaction = await Transactions.findByPk(transactionId, {
+      include: ['user', 'category', 'transactionType'],
+    })
+    return transactionFormat(transaction, 'one')
+  } catch (error) {
+    throw new ErrorObject(error.message, error.statusCode || 500)
+  }
+}
+
 // Get categories and transactions types for the new transaction's form
 exports.getNewFormInfo = async () => {
   try {
