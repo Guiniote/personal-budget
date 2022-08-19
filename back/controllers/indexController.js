@@ -12,7 +12,7 @@ const { endpointResponse } = require('../helpers/success')
 const { catchAsync } = require('../helpers/catchAsync')
 
 module.exports = {
-  // Find all the transactions in the database
+  // Find all transactions in the database
   allTransactions: catchAsync(async (req, res, next) => {
     try {
       const response = await getTransactions()

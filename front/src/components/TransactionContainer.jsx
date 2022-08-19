@@ -22,7 +22,7 @@ function TransactionContainer() {
     } catch (err) {
       console.error(`Error: ${err}`)
     }
-  }, [transactionsStored])
+  }, [])
 
   const filter = (filterName, filterOption) => {
     let transactionsFiltered = []
