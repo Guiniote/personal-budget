@@ -40,20 +40,21 @@ function TransactionForm({
 
           <FormInputField label="Fecha" name="date" type="date" />
 
-          <FormInputField label="Usuario" name="userId" type="number" />
-
-          <FormSelectField label="Tipo" name="transactionTypeId">
-            <option value="" disabled defaultValue hidden>
-              Seleccione un tipo
-            </option>
-            {transactionTypes
-              ? transactionTypes.map((transactionType) => (
-                  <option value={transactionType.id} key={transactionType.id}>
-                    {transactionType.name}
-                  </option>
-                ))
-              : ''}
-          </FormSelectField>
+          {/* <FormInputField label="Usuario" name="userId" type="number" /> */}
+          {button === 'Crear' && (
+            <FormSelectField label="Tipo" name="transactionTypeId">
+              <option value="" disabled defaultValue hidden>
+                Seleccione un tipo
+              </option>
+              {transactionTypes
+                ? transactionTypes.map((transactionType) => (
+                    <option value={transactionType.id} key={transactionType.id}>
+                      {transactionType.name}
+                    </option>
+                  ))
+                : ''}
+            </FormSelectField>
+          )}
 
           <button type="submit">{button}</button>
         </Form>

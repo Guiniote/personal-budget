@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import Cookies from 'universal-cookie'
 import TransactionList from './TransactionList'
 import Filter from './Filter'
 
@@ -9,6 +10,9 @@ function TransactionContainer() {
   const [transactionsStored, setTransactionsStored] = useState(null)
   const [categories, setCategories] = useState(null)
   const [transactionTypes, setTransactionTypes] = useState(null)
+  const cookies = new Cookies()
+  const { token } = cookies.get('TokenCookie')
+  const navigate = useNavigate()
 
   useEffect(() => {
     try {
@@ -38,11 +42,17 @@ function TransactionContainer() {
 
   const deleteTransaction = (transactionId) => {
     try {
-      confirm('Está seguro de que quiere borrar la transaccion?')
-        ? axios.delete(
+      confirm('Está seguro de que quiere borrar la transaccion?') &&
+        axios
+          .delete(
             `${process.env.REACT_APP_API_DOMAIN}/transaction/${transactionId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            },
           )
-        : ''
+          .then(() => navigate('/'))
     } catch (err) {
       console.error(`Error: ${err}`)
     }

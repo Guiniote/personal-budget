@@ -40,19 +40,25 @@ exports.getOneUser = async (userEmail) => {
     })
     return user
   } catch (error) {
-    throw new ErrorObject('invalid user or password', 401 || 500)
+    // throw new ErrorObject('invalid email or password', 401 || 500)
+    return null
   }
 }
 
 // Create a new user in the database
 exports.createNewUser = async (newUser) => {
   try {
-    const saltRounds = 10
-    const passwordHash = await bcrypt.hash(newUser.password, saltRounds)
-    await Users.create({
-      ...newUser,
-      password: passwordHash,
-    })
+    const userExist = await this.getOneUser(newUser.eMail)
+    if (userExist) {
+      throw new ErrorObject('user already exist', 409)
+    } else {
+      const saltRounds = 10
+      const passwordHash = await bcrypt.hash(newUser.password, saltRounds)
+      await Users.create({
+        ...newUser,
+        password: passwordHash,
+      })
+    }
     return
   } catch (error) {
     throw new ErrorObject(error.message, error.statusCode || 500)
@@ -65,7 +71,7 @@ exports.getLoginUser = async (userEmail, userPassword) => {
     const user = await this.getOneUser(userEmail)
     const passwordOK = user === null ? false : await bcrypt.compare(userPassword, user.password)
     if (!(user && passwordOK)) {
-      throw new ErrorObject('invalid user or password', 401)
+      throw new ErrorObject('invalid email or password', 401)
     }
     const userToken = jwt.sign(
       {
@@ -79,6 +85,8 @@ exports.getLoginUser = async (userEmail, userPassword) => {
     )
 
     return {
+      userId: user.id,
+      name: user.name,
       email: user.email,
       token: userToken,
     }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useParams, useNavigate } from 'react-router-dom'
+import Cookies from 'universal-cookie'
 import TransactionFormStructure from './TransactionFormStructure'
 
 function TransactionFormContainer() {
@@ -9,6 +10,8 @@ function TransactionFormContainer() {
   const [categories, setCategories] = useState(null)
   const [transactionTypes, setTransactionTypes] = useState(null)
   const navigate = useNavigate()
+  const cookies = new Cookies()
+  const { token, userId } = cookies.get('TokenCookie')
 
   useEffect(() => {
     try {
@@ -39,24 +42,36 @@ function TransactionFormContainer() {
           .patch(
             `${process.env.REACT_APP_API_DOMAIN}/transaction/${transactionIdToEdit}`,
             {
-              userId: values.userId,
               categoryId: values.categoryId,
               concept: values.concept,
               amount: values.amount,
               date: values.date,
             },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            },
           )
           .then(() => navigate('/transaction'))
       } else {
         axios
-          .post(`${process.env.REACT_APP_API_DOMAIN}/transaction/new`, {
-            userId: values.userId,
-            categoryId: values.categoryId,
-            concept: values.concept,
-            amount: values.amount,
-            date: values.date,
-            transactionTypeId: values.transactionTypeId,
-          })
+          .post(
+            `${process.env.REACT_APP_API_DOMAIN}/transaction/new`,
+            {
+              userId: userId,
+              categoryId: values.categoryId,
+              concept: values.concept,
+              amount: values.amount,
+              date: values.date,
+              transactionTypeId: values.transactionTypeId,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            },
+          )
           .then(() => navigate('/transaction'))
       }
     } catch (err) {

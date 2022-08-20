@@ -16,10 +16,7 @@ exports.userTokenMiddleware = (req, res, next) => {
       throw new ErrorObject('token missing or invalid', 401)
     }
 
-    // const { id: userId } = decodedToken
-    console.log(decodedToken.id)
     req.userId = decodedToken.id
-    // req.userId = userId
   } catch (error) {
     throw new ErrorObject('token missing or invalid', 401 || 500)
   }

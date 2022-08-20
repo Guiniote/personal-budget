@@ -42,7 +42,7 @@ module.exports = {
     }
   }),
 
-  // Create a user endpoint
+  // Create user endpoint
   submitNewUser: catchAsync(async (req, res, next) => {
     try {
       await createNewUser({
