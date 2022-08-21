@@ -5,15 +5,27 @@ import Loader from './Loader'
 function TransactionList({ transactionList, onDelete }) {
   return (
     <div>
-      <table>
+      <table className="w-full border-collapse table-auto">
         <thead>
           <tr>
-            <th>Categoría</th>
-            <th>Concepto</th>
-            <th>Importe</th>
-            <th>Fecha</th>
-            <th>Usuario</th>
-            <th>Tipo</th>
+            <th className="border-solid border-y-[1px] border-gray-300 px-2 py-3 text-left bg-indigo-300 text-white">
+              Categoría
+            </th>
+            <th className="border-solid border-y-[1px] border-gray-300 px-2 py-3 text-left bg-indigo-300 text-white">
+              Concepto
+            </th>
+            <th className="border-solid border-y-[1px] border-gray-300 px-2 py-3 text-left bg-indigo-300 text-white">
+              Importe
+            </th>
+            <th className="border-solid border-y-[1px] border-gray-300 px-2 py-3 text-left bg-indigo-300 text-white">
+              Fecha
+            </th>
+            <th className="border-solid border-y-[1px] border-gray-300 px-2 py-3 text-left bg-indigo-300 text-white">
+              Usuario
+            </th>
+            <th className="border-solid border-y-[1px] border-gray-300 px-2 py-3 text-left bg-indigo-300 text-white">
+              Tipo
+            </th>
             <th></th>
           </tr>
         </thead>

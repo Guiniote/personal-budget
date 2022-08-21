@@ -10,27 +10,50 @@ function UserFormLogin({
   error,
 }) {
   return (
-    <div>
-      <h1>Login</h1>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={(values) => onSubmitForm(values)}
-      >
-        <Form>
-          <FormInputField label="e-Mail" name="email" type="email" />
+    <div className="flex flex-row w-full mt-12">
+      <div className="py-12 flex-1">
+        <div className="flex bg-gray-100 rounded-lg shadow-2xl overflow-hidden mx-auto max-w-xs md:max-w-lg lg:max-w-xl">
+          <div className="w-full p-8">
+            <h1 className="mb-8 text-2xl font-semibold text-gray-600 text-center">
+              Login
+            </h1>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={(values) => onSubmitForm(values)}
+            >
+              <Form>
+                <FormInputField label="Email" name="email" type="email" />
 
-          <FormInputField label="Contraseña" name="password" type="password" />
-
-          <button type="submit">Ingresar</button>
-          {error ? <span>Mail o contraseña inválidos</span> : null}
-
-          <p>No tiene usuario? Registrese </p>
-          <Link to={`/register`}>
-            <span>aquí</span>
-          </Link>
-        </Form>
-      </Formik>
+                <FormInputField
+                  label="Contraseña"
+                  name="password"
+                  type="password"
+                />
+                <div className="mt-8">
+                  <button
+                    className="bg-indigo-500 text-white font-bold py-2 px-4 w-full rounded-lg hover:bg-indigo-400"
+                    type="submit"
+                  >
+                    Ingresar
+                  </button>
+                </div>
+                {error ? (
+                  <span className="text-red-500 text-sm">
+                    Mail o contraseña inválidos
+                  </span>
+                ) : null}
+                <div className="mt-8 flex flex-row">
+                  <p>No tiene usuario? Registrese</p>
+                  <Link to={`/register`}>
+                    <span className="mx-1 underline">aquí</span>
+                  </Link>
+                </div>
+              </Form>
+            </Formik>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
