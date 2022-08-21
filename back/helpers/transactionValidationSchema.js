@@ -1,6 +1,7 @@
 const Yup = require('yup')
 
 exports.transactionValidationSchema = Yup.object({
+  userId: Yup.number().required('Obligatorio'),
   categoryId: Yup.mixed().required('Obligatorio'),
   concept: Yup.string()
     .min(3, 'Debe tener al menos 3 caracteres')
