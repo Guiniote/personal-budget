@@ -4,7 +4,7 @@ import Cookies from 'universal-cookie'
 
 function ProtectedRoute({ children, redirectPath = '/login' }) {
   const cookies = new Cookies()
-  const { token } = cookies.get('TokenCookie')
+  const token = cookies.get('TokenCookie')
   if (!token) {
     return <Navigate to={redirectPath} replace />
   }
