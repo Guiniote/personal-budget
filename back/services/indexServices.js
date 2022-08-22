@@ -125,7 +125,6 @@ exports.updateTransaction = async (transaction) => {
   try {
     await Transactions.update(
       {
-        userId: transaction.userId,
         concept: transaction.concept,
         categoryId: transaction.categoryId,
         amount: transaction.amount,

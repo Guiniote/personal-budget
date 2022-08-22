@@ -15,7 +15,10 @@ const {
 
 const router = express.Router()
 const { userTokenMiddleware } = require('../middlewares/userTokenMiddleware')
-const { transactionValidationSchema } = require('../helpers/transactionValidationSchema')
+const {
+  transactionPostValidationSchema,
+  transactionPatchValidationSchema,
+} = require('../helpers/transactionValidationSchema')
 const { loginValidationSchema } = require('../helpers/loginValidationSchema')
 const { registerValidationSchema } = require('../helpers/registerValidationSchema')
 const { validationMiddleware } = require('../middlewares/validationMiddleware')
@@ -27,7 +30,7 @@ router.get('/transaction/new', newTransaction)
 router.post(
   '/transaction/new',
   userTokenMiddleware,
-  validationMiddleware(transactionValidationSchema),
+  validationMiddleware(transactionPostValidationSchema),
   submitNewTransaction,
 )
 router.delete('/transaction/:id', userTokenMiddleware, deleteTransaction)
@@ -35,7 +38,7 @@ router.get('/transaction/:id', getTransaction)
 router.patch(
   '/transaction/:id',
   userTokenMiddleware,
-  validationMiddleware(transactionValidationSchema),
+  validationMiddleware(transactionPatchValidationSchema),
   updateTransaction,
 )
 router.get('/users', allUsers) // Quitar luego
