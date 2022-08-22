@@ -1,9 +1,9 @@
 import React from 'react'
 import TransactionRow from './TransactionRow'
-import Loader from './Loader'
 
 function TransactionList({ transactionList, onDelete }) {
   return (
+    // Table headers to show transactions
     <div>
       <table className="w-full border-collapse table-auto">
         <thead>

@@ -5,21 +5,23 @@ function Filter({ name, title, options, onFilter }) {
   return (
     <div className="flex flex-row">
       <div className="flex-auto md:shrink"></div>
+      {/* Print filter title */}
       <p className="flex-none my-auto text-xs ml-4 md:ml-9">{title}:</p>
+      {/* Display filter options */}
       <select
         name={`${name}Filter`}
         id={`${name}Filter`}
         className="flex-none bg-gray-200 text-gray-700 my-auto text-xs h-1/2 mx-3 focus:outline-none focus:shadow border border-gray-300 rounded"
       >
         <option value=""></option>
-        {options
-          ? options.map((option) => (
-              <option value={option.name} key={option.id}>
-                {option.name}
-              </option>
-            ))
-          : ''}
+        {options &&
+          options.map((option) => (
+            <option value={option.name} key={option.id}>
+              {option.name}
+            </option>
+          ))}
       </select>
+      {/* Apply filter button */}
       <button
         className="flex-none ml-2 text-xs "
         onClick={

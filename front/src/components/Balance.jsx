@@ -2,6 +2,7 @@ import React from 'react'
 
 function Balance({ balance }) {
   return (
+    // Show actual balace with color changing logic for positive or negative balance
     <p className="text-bold">
       Balance actual:
       {Math.sign(balance) === 1 ? (

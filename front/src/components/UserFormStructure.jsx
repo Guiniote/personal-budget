@@ -3,6 +3,7 @@ import * as Yup from 'yup'
 import UserFormLogin from './UserFormLogin'
 import UserFormRegister from './UserFormRegister'
 
+// This component is to prepare all info needed by Formik for use the form and leave cleaner the form component
 function UserFormStructure({ onSubmitForm, toBeRegister, error }) {
   const [isRegister, setIsRegister] = useState(null)
   const [initialValues, setInitialValues] = useState({
@@ -19,6 +20,7 @@ function UserFormStructure({ onSubmitForm, toBeRegister, error }) {
   )
 
   useEffect(() => {
+    // If it's a login, I use the default initialValues. If it's an registration, I set the other values needed
     if (toBeRegister === 1) {
       setIsRegister(1)
       setInitialValues({
@@ -27,6 +29,8 @@ function UserFormStructure({ onSubmitForm, toBeRegister, error }) {
         surname: '',
         passwordConfirm: '',
       })
+
+      // If it's a login, I use the default Yup validation schema. If it's an registration, I set the other values needed
       setValidationSchema(
         Yup.object({
           name: Yup.string()
@@ -54,6 +58,7 @@ function UserFormStructure({ onSubmitForm, toBeRegister, error }) {
     }
   }, [toBeRegister])
 
+  // If it's a login, I show the login form. If it's an registration, I show the register form.
   return toBeRegister === 1 ? (
     <UserFormRegister
       key={isRegister}
@@ -64,7 +69,6 @@ function UserFormStructure({ onSubmitForm, toBeRegister, error }) {
     />
   ) : (
     <UserFormLogin
-      //   key={isEdit}
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmitForm={onSubmitForm}

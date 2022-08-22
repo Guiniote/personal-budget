@@ -12,6 +12,7 @@ function Transaction({ transaction, onDelete }) {
     rawDate.getUTCFullYear()
 
   return (
+    // Table rows to show transactions
     <>
       <tbody>
         <tr key={transaction.id}>
@@ -33,6 +34,7 @@ function Transaction({ transaction, onDelete }) {
           <td className="border-solid border-y-[1px] border-gray-300 p-2">
             {transaction.transactionType}
           </td>
+          {/* Show delete and edit transaction button */}
           {onDelete && (
             <td>
               <button onClick={() => onDelete(transaction.id)} className="mx-1">

@@ -21,6 +21,7 @@ function UserFormLogin({
               validationSchema={validationSchema}
               onSubmit={(values) => onSubmitForm(values, 1)}
             >
+              {/* Display the form */}
               <Form>
                 <FormInputField label="Nombre" name="name" type="text" />
 
@@ -40,6 +41,7 @@ function UserFormLogin({
                   type="password"
                 />
                 <div className="mt-8">
+                  {/*Show submit button*/}
                   <button
                     className="bg-indigo-500 text-white font-bold py-2 px-4 w-full rounded-lg hover:bg-indigo-400"
                     type="submit"
@@ -47,11 +49,12 @@ function UserFormLogin({
                     Registrarse
                   </button>
                 </div>
-                {error ? (
+                {/* Show possible submit errors */}
+                {error && (
                   <span className="text-red-500 text-sm">
                     Ya existe un usuario con ese email
                   </span>
-                ) : null}
+                )}
               </Form>
             </Formik>
           </div>

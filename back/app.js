@@ -5,7 +5,8 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors')
 require('dotenv').config()
 
-const indexRouter = require('./routes/indexRoutes')
+const transactionRouter = require('./routes/transactionRoutes')
+const userRouter = require('./routes/userRoutes')
 
 const port = process.env.PORT || 3001
 
@@ -17,7 +18,8 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/', indexRouter)
+app.use('/', transactionRouter)
+app.use('/user', userRouter)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

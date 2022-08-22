@@ -7,11 +7,9 @@ const {
   homeInfo,
   newTransaction,
   getTransaction,
-} = require('../controllers/indexController')
+} = require('../controllers/transactionController')
 
-const {
-  allUsers, oneUser, submitNewUser, loginUser,
-} = require('../controllers/userController')
+// const { submitNewUser, loginUser } = require('../controllers/userController')
 
 const router = express.Router()
 const { userTokenMiddleware } = require('../middlewares/userTokenMiddleware')
@@ -19,11 +17,10 @@ const {
   transactionPostValidationSchema,
   transactionPatchValidationSchema,
 } = require('../helpers/transactionValidationSchema')
-const { loginValidationSchema } = require('../helpers/loginValidationSchema')
-const { registerValidationSchema } = require('../helpers/registerValidationSchema')
+// const { loginValidationSchema } = require('../helpers/loginValidationSchema')
+// const { registerValidationSchema } = require('../helpers/registerValidationSchema')
 const { validationMiddleware } = require('../middlewares/validationMiddleware')
 
-// example of a route with index controller get function
 router.get('/', homeInfo)
 router.get('/transaction', allTransactions)
 router.get('/transaction/new', newTransaction)
@@ -41,9 +38,7 @@ router.patch(
   validationMiddleware(transactionPatchValidationSchema),
   updateTransaction,
 )
-router.get('/users', allUsers) // Quitar luego
-router.get('/user', oneUser) // Quitar luego
-router.post('/user/new', validationMiddleware(registerValidationSchema), submitNewUser)
-router.post('/user/login', validationMiddleware(loginValidationSchema), loginUser)
+// router.post('/user/new', validationMiddleware(registerValidationSchema), submitNewUser)
+// router.post('/user/login', validationMiddleware(loginValidationSchema), loginUser)
 
 module.exports = router

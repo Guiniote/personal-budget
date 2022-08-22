@@ -27,18 +27,18 @@ function TransactionForm({
                 validationSchema={validationSchema}
                 onSubmit={(values) => onSubmitFormType(values)}
               >
+                {/* Display the form */}
                 <Form>
                   <FormSelectField label="Categoría" name="categoryId">
                     <option value="" disabled defaultValue hidden>
                       Seleccione una categoría
                     </option>
-                    {categories
-                      ? categories.map((category) => (
-                          <option value={category.id} key={category.id}>
-                            {category.name}
-                          </option>
-                        ))
-                      : ''}
+                    {categories &&
+                      categories.map((category) => (
+                        <option value={category.id} key={category.id}>
+                          {category.name}
+                        </option>
+                      ))}
                   </FormSelectField>
 
                   <FormInputField label="Concepto" name="concept" type="text" />
@@ -52,30 +52,31 @@ function TransactionForm({
                       <option value="" disabled defaultValue hidden>
                         Seleccione un tipo
                       </option>
-                      {transactionTypes
-                        ? transactionTypes.map((transactionType) => (
-                            <option
-                              value={transactionType.id}
-                              key={transactionType.id}
-                            >
-                              {transactionType.name}
-                            </option>
-                          ))
-                        : ''}
+                      {transactionTypes &&
+                        transactionTypes.map((transactionType) => (
+                          <option
+                            value={transactionType.id}
+                            key={transactionType.id}
+                          >
+                            {transactionType.name}
+                          </option>
+                        ))}
                     </FormSelectField>
                   )}
                   <div className="mt-8">
+                    {/*Show submit button*/}
                     <button
                       className="bg-indigo-500 text-white font-bold py-2 px-4 w-full rounded-lg hover:bg-indigo-400"
                       type="submit"
                     >
                       {button}
                     </button>
-                    {error ? (
+                    {/* Show possible submit errors */}
+                    {error && (
                       <span className="text-red-500 text-sm">
                         Error: {error}
                       </span>
-                    ) : null}
+                    )}
                   </div>
                 </Form>
               </Formik>

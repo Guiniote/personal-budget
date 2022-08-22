@@ -1,6 +1,7 @@
 import React from 'react'
 import { useField } from 'formik'
 
+// Select field component, with label, input and error handler
 function FormSelectField({ label, ...props }) {
   const [field, meta] = useField(props)
   return (

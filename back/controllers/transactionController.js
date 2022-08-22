@@ -7,7 +7,7 @@ const {
   getHomeInfo,
   getNewFormInfo,
   getOneTransaction,
-} = require('../services/indexServices')
+} = require('../services/transactionServices')
 const { endpointResponse } = require('../helpers/success')
 const { catchAsync } = require('../helpers/catchAsync')
 
@@ -66,7 +66,7 @@ module.exports = {
     }
   }),
 
-  // Create a transaction endpoint
+  // Create a transaction
   submitNewTransaction: catchAsync(async (req, res, next) => {
     try {
       await createNewTransaction({
@@ -86,7 +86,7 @@ module.exports = {
     }
   }),
 
-  // Delete a transaction endpoint
+  // Delete a transaction
   deleteTransaction: catchAsync(async (req, res, next) => {
     try {
       await deleteOneTransaction(Number(req.params.id))
@@ -104,7 +104,7 @@ module.exports = {
     }
   }),
 
-  // Update a transaction endpoint
+  // Update a transaction
   updateTransaction: catchAsync(async (req, res, next) => {
     try {
       await updateTransaction({

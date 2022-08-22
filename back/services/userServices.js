@@ -23,7 +23,7 @@ exports.getAllUsers = async () => {
   }
 }
 
-// Get one user
+// Get one user from an email
 exports.getOneUser = async (userEmail) => {
   try {
     let user = {}
@@ -45,7 +45,7 @@ exports.getOneUser = async (userEmail) => {
   }
 }
 
-// Create a new user in the database
+// Create a new user in database
 exports.createNewUser = async (newUser) => {
   try {
     const userExist = await this.getOneUser(newUser.eMail)

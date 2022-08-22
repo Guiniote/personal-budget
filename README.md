@@ -38,3 +38,7 @@ Para que la app funcione, deberán ser ejecutados los siguientes comandos de seq
 - <pre><code>sequelize db:create</code></pre>
 - <pre><code>sequelize db:migrate</code></pre>
 - Opcional si queres cargar datos en la db: <pre><code>sequelize db:seed:all</code></pre>
+
+### Iniciando el repositorio local ⌨
+
+npm run dev

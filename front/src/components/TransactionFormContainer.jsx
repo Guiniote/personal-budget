@@ -16,6 +16,7 @@ function TransactionFormContainer() {
 
   useEffect(() => {
     try {
+      // Get all necesary info to create a new transaction or show options to edit one
       axios
         .get(`${process.env.REACT_APP_API_DOMAIN}/transaction/new`)
         .then((response) => {
@@ -25,7 +26,9 @@ function TransactionFormContainer() {
         .catch(function (error) {
           setErrorStatus(error.response.status)
         })
+      // Logic to establish if it's a new transacion or an edition
       if (transactionId) {
+        // If it's and edition, it gets the transaction info from the database
         axios
           .get(
             `${process.env.REACT_APP_API_DOMAIN}/transaction/${transactionId}`,
@@ -42,9 +45,11 @@ function TransactionFormContainer() {
     }
   }, [])
 
+  // Submit function
   const onSubmitForm = (values, transactionIdToEdit) => {
     try {
       if (transactionIdToEdit) {
+        // If it's an edition, use patch
         axios
           .patch(
             `${process.env.REACT_APP_API_DOMAIN}/transaction/${transactionIdToEdit}`,
@@ -65,6 +70,7 @@ function TransactionFormContainer() {
             setErrorStatus(error.response)
           })
       } else {
+        // If its a new transaction, then post the data
         axios
           .post(
             `${process.env.REACT_APP_API_DOMAIN}/transaction/new`,

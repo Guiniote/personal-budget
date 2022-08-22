@@ -12,6 +12,7 @@ function App() {
     <BrowserRouter>
       <NavBar />
       <Routes>
+        {/* I use this component to only show this routes to a logged in user */}
         <Route element={<ProtectedRoute />}>
           <Route exact path="/" element={<HomeContainer />} />
           <Route path="/transaction" element={<TransactionContainer />} />
@@ -24,6 +25,7 @@ function App() {
             element={<TransactionFormContainer />}
           />
         </Route>
+        {/* I use this component to only show this routes to a not logged in user */}
         <Route element={<UnprotectedRoute />}>
           <Route path="/login" element={<UserFormContainer />} />
           <Route

@@ -22,6 +22,7 @@ function UserFormLogin({
               validationSchema={validationSchema}
               onSubmit={(values) => onSubmitForm(values)}
             >
+              {/* Display the form */}
               <Form>
                 <FormInputField label="Email" name="email" type="email" />
 
@@ -31,6 +32,7 @@ function UserFormLogin({
                   type="password"
                 />
                 <div className="mt-8">
+                  {/*Show submit button*/}
                   <button
                     className="bg-indigo-500 text-white font-bold py-2 px-4 w-full rounded-lg hover:bg-indigo-400"
                     type="submit"
@@ -38,11 +40,12 @@ function UserFormLogin({
                     Ingresar
                   </button>
                 </div>
-                {error ? (
+                {/* Show possible submit errors */}
+                {error && (
                   <span className="text-red-500 text-sm">
                     Mail o contraseña inválidos
                   </span>
-                ) : null}
+                )}
                 <div className="mt-8 flex flex-row">
                   <p>No tiene usuario? Registrese</p>
                   <Link to={`/register`}>

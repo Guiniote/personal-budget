@@ -6,9 +6,10 @@ const { endpointResponse } = require('../helpers/success')
 const { catchAsync } = require('../helpers/catchAsync')
 
 module.exports = {
-  // Find all users in the database
+  // Find all users in database
   allUsers: catchAsync(async (req, res, next) => {
     try {
+      console.log(4)
       const response = await getAllUsers()
       endpointResponse({
         res,
@@ -24,7 +25,7 @@ module.exports = {
     }
   }),
 
-  // Find one user in the database
+  // Find one user in database
   oneUser: catchAsync(async (req, res, next) => {
     try {
       const response = await getOneUser(req.body.userEmail)
@@ -42,7 +43,7 @@ module.exports = {
     }
   }),
 
-  // Create user endpoint
+  // Create user
   submitNewUser: catchAsync(async (req, res, next) => {
     try {
       await createNewUser({
@@ -62,7 +63,7 @@ module.exports = {
     }
   }),
 
-  // Login user endpoint
+  // Login user
   loginUser: catchAsync(async (req, res, next) => {
     try {
       const response = await getLoginUser(req.body.eMail, req.body.password)
