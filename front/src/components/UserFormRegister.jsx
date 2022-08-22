@@ -9,7 +9,7 @@ function UserFormLogin({
   error,
 }) {
   return (
-    <div className="flex flex-row w-full mt-12">
+    <div className="flex flex-row w-full mt-12 bg-purple-50">
       <div className="py-12 flex-1">
         <div className="flex bg-gray-100 rounded-lg shadow-2xl overflow-hidden mx-auto max-w-xs md:max-w-lg lg:max-w-xl">
           <div className="w-full p-8">

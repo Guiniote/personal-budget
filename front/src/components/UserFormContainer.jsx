@@ -40,8 +40,8 @@ function UserFormContainer({ toBeRegister }) {
             setErrorStatus(error.response.status)
           })
       }
-    } catch (err) {
-      console.error(`Error: ${err}`)
+    } catch (error) {
+      setErrorStatus(error.response)
     }
   }
 

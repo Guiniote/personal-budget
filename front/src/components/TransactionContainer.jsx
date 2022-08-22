@@ -67,7 +67,7 @@ function TransactionContainer() {
           </div>
           <li
             onClick={() => filter('transactionType', '')}
-            className="flex-none my-auto mx-4 underline text-sm md:mx-7"
+            className="flex-none my-auto mx-4 underline text-sm md:mx-7 cursor-pointer"
           >
             Todos
           </li>
@@ -76,7 +76,7 @@ function TransactionContainer() {
               <li
                 key={index}
                 onClick={() => filter('transactionType', transactionType.name)}
-                className="flex-none my-auto mx-4 underline text-sm md:mx-7"
+                className="flex-none my-auto mx-4 underline text-sm md:mx-7 cursor-pointer"
               >
                 {transactionType.name}
               </li>

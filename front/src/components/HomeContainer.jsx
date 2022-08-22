@@ -7,6 +7,7 @@ import TransactionList from './TransactionList'
 function HomeContainer() {
   const [actualBalance, setActualBalance] = useState(null)
   const [lastTenTransactions, setLastTenTransactions] = useState(null)
+  const [errorStatus, setErrorStatus] = useState(null)
 
   useEffect(() => {
     try {
@@ -14,8 +15,8 @@ function HomeContainer() {
         setActualBalance(response.data.body.actualBalance)
         setLastTenTransactions(response.data.body.lastTenTransactions)
       })
-    } catch (err) {
-      console.error(`Error: ${err}`)
+    } catch (error) {
+      setErrorStatus(error.response)
     }
   }, [])
 
@@ -49,6 +50,9 @@ function HomeContainer() {
           <button>Ver todos los movimientos</button>
         </Link>
       </div>
+      {errorStatus ? (
+        <span className="text-red-500 text-sm">Error: {errorStatus}</span>
+      ) : null}
     </div>
   )
 }

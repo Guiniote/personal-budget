@@ -7,6 +7,7 @@ function TransactionFormStructure({
   transactionTypes,
   transaction,
   onSubmitForm,
+  error,
 }) {
   const [isEdit, setIsEdit] = useState(null)
   const [initialValues, setInitialValues] = useState({
@@ -66,6 +67,7 @@ function TransactionFormStructure({
       validationSchema={validationSchema}
       onSubmitFormType={onSubmitFormType}
       button={button}
+      error={error}
     />
   )
 }

@@ -9,6 +9,7 @@ function TransactionFormContainer() {
   const [transaction, setTransaction] = useState(null)
   const [categories, setCategories] = useState(null)
   const [transactionTypes, setTransactionTypes] = useState(null)
+  const [errorStatus, setErrorStatus] = useState(null)
   const navigate = useNavigate()
   const cookies = new Cookies()
   const { token, userId } = cookies.get('TokenCookie')
@@ -21,6 +22,9 @@ function TransactionFormContainer() {
           setCategories(response.data.body.categories)
           setTransactionTypes(response.data.body.transactionTypes)
         })
+        .catch(function (error) {
+          setErrorStatus(error.response.status)
+        })
       if (transactionId) {
         axios
           .get(
@@ -29,9 +33,12 @@ function TransactionFormContainer() {
           .then((response) => {
             setTransaction(response.data.body)
           })
+          .catch(function (error) {
+            setErrorStatus(error.response.status)
+          })
       }
-    } catch (err) {
-      console.error(`Error: ${err}`)
+    } catch (error) {
+      setErrorStatus(error.response.status)
     }
   }, [])
 
@@ -54,6 +61,9 @@ function TransactionFormContainer() {
             },
           )
           .then(() => navigate('/transaction'))
+          .catch(function (error) {
+            setErrorStatus(error.response)
+          })
       } else {
         axios
           .post(
@@ -73,9 +83,12 @@ function TransactionFormContainer() {
             },
           )
           .then(() => navigate('/transaction'))
+          .catch(function (error) {
+            setErrorStatus(error.response.status)
+          })
       }
-    } catch (err) {
-      console.error(`Error: ${err}`)
+    } catch (error) {
+      setErrorStatus(error.response)
     }
   }
 
@@ -85,6 +98,7 @@ function TransactionFormContainer() {
       transactionTypes={transactionTypes}
       transaction={transaction}
       onSubmitForm={onSubmitForm}
+      error={errorStatus}
     />
   )
 }
