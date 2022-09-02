@@ -23,20 +23,18 @@ function TransactionFormContainer() {
           setCategories(response.data.body.categories)
           setTransactionTypes(response.data.body.transactionTypes)
         })
-        .catch(function (error) {
+        .catch((error) => {
           setErrorStatus(error.response.status)
         })
       // Logic to establish if it's a new transacion or an edition
       if (transactionId) {
         // If it's and edition, it gets the transaction info from the database
         axios
-          .get(
-            `${process.env.REACT_APP_API_DOMAIN}/transaction/${transactionId}`,
-          )
+          .get(`${process.env.REACT_APP_API_DOMAIN}/transaction/${transactionId}`)
           .then((response) => {
             setTransaction(response.data.body)
           })
-          .catch(function (error) {
+          .catch((error) => {
             setErrorStatus(error.response.status)
           })
       }
@@ -66,7 +64,7 @@ function TransactionFormContainer() {
             },
           )
           .then(() => navigate('/transaction'))
-          .catch(function (error) {
+          .catch((error) => {
             setErrorStatus(error.response)
           })
       } else {
@@ -75,7 +73,7 @@ function TransactionFormContainer() {
           .post(
             `${process.env.REACT_APP_API_DOMAIN}/transaction/new`,
             {
-              userId: userId,
+              userId,
               categoryId: values.categoryId,
               concept: values.concept,
               amount: values.amount,
@@ -89,7 +87,7 @@ function TransactionFormContainer() {
             },
           )
           .then(() => navigate('/transaction'))
-          .catch(function (error) {
+          .catch((error) => {
             setErrorStatus(error.response.status)
           })
       }

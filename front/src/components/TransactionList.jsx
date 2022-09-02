@@ -26,15 +26,11 @@ function TransactionList({ transactionList, onDelete }) {
             <th className="border-solid border-y-[1px] border-gray-300 px-2 py-3 text-left bg-indigo-300 text-white">
               Tipo
             </th>
-            <th></th>
+            <th aria-label="Action Buttons" />
           </tr>
         </thead>
         {transactionList.map((transaction) => (
-          <TransactionRow
-            key={transaction.id}
-            transaction={transaction}
-            onDelete={onDelete}
-          />
+          <TransactionRow key={transaction.id} transaction={transaction} onDelete={onDelete} />
         ))}
       </table>
     </div>

@@ -1,3 +1,4 @@
+import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import HomeContainer from './components/HomeContainer'
 import TransactionContainer from './components/TransactionContainer'
@@ -16,22 +17,13 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route exact path="/" element={<HomeContainer />} />
           <Route path="/transaction" element={<TransactionContainer />} />
-          <Route
-            path="/transaction/new"
-            element={<TransactionFormContainer />}
-          />
-          <Route
-            path="/transaction/:transactionId"
-            element={<TransactionFormContainer />}
-          />
+          <Route path="/transaction/new" element={<TransactionFormContainer />} />
+          <Route path="/transaction/:transactionId" element={<TransactionFormContainer />} />
         </Route>
         {/* I use this component to only show this routes to a not logged in user */}
         <Route element={<UnprotectedRoute />}>
           <Route path="/login" element={<UserFormContainer />} />
-          <Route
-            path="/register"
-            element={<UserFormContainer toBeRegister={1} />}
-          />
+          <Route path="/register" element={<UserFormContainer toBeRegister={1} />} />
         </Route>
       </Routes>
     </BrowserRouter>

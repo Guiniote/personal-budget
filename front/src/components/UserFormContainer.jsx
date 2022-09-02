@@ -21,11 +21,12 @@ function UserFormContainer({ toBeRegister }) {
             password: values.password,
           })
           .then(() => navigate('/'))
-          .catch(function (error) {
+          .catch((error) => {
             setErrorStatus(error.response.status)
           })
       } else {
-        // If it's a login, I post to login endpoint with mail and password, and then I save user info and token in a cookie
+        /* If it's a login, I post to login endpoint with mail and password,
+        and then I save user info and token in a cookie */
         axios
           .post(`${process.env.REACT_APP_API_DOMAIN}/user/login`, {
             eMail: values.email,
@@ -38,7 +39,7 @@ function UserFormContainer({ toBeRegister }) {
             })
             navigate('/')
           })
-          .catch(function (error) {
+          .catch((error) => {
             setErrorStatus(error.response.status)
           })
       }

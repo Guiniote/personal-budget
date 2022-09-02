@@ -17,9 +17,7 @@ function FormInputField({ label, ...props }) {
         {...field}
         {...props}
       />
-      {meta.touched && meta.error ? (
-        <div className="text-red-500 text-sm">{meta.error}</div>
-      ) : null}
+      {meta.touched && meta.error ? <div className="text-red-500 text-sm">{meta.error}</div> : null}
     </div>
   )
 }

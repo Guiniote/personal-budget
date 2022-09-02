@@ -17,9 +17,7 @@ function FormSelectField({ label, ...props }) {
         {...props}
         className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow border border-gray-300 rounded py-2 px-4 block w-full"
       />
-      {meta.touched && meta.error ? (
-        <div className="text-red-500 text-sm">{meta.error}</div>
-      ) : null}
+      {meta.touched && meta.error ? <div className="text-red-500 text-sm">{meta.error}</div> : null}
     </div>
   )
 }

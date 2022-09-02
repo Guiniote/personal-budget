@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import * as Yup from 'yup'
 import TransactionForm from './TransactionForm'
 
-// This component is to prepare all info needed by Formik for use the form and leave cleaner the form component
+// Component to prepare info needed by Formik for use the form and leave cleaner the form component
 function TransactionFormStructure({
   categories,
   transactionTypes,
@@ -23,7 +23,8 @@ function TransactionFormStructure({
   const [button, setButton] = useState('Crear')
 
   useEffect(() => {
-    // If it's a new transaction, I use the default initialValues. If it's an edition, I set the transaction's actual values
+    /* If it's a new transaction, I use the default initialValues.
+    If it's an edition, I set the transaction's actual values */
     if (transaction) {
       setIsEdit(1)
       setInitialValues({
@@ -46,12 +47,8 @@ function TransactionFormStructure({
       .min(3, 'Debe tener al menos 3 caracteres')
       .max(40, 'Debe tener como mucho 40 caracteres')
       .required('Obligatorio'),
-    amount: Yup.number()
-      .positive('El valor debe ser positivo')
-      .required('Obligatorio'),
-    date: Yup.date()
-      .max(new Date(), 'No se pueden cargar gastos futuros')
-      .required('Obligatorio'),
+    amount: Yup.number().positive('El valor debe ser positivo').required('Obligatorio'),
+    date: Yup.date().max(new Date(), 'No se pueden cargar gastos futuros').required('Obligatorio'),
     transactionTypeId: Yup.mixed().required('Obligatorio'),
   })
 

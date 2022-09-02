@@ -30,26 +30,22 @@ function HomeContainer() {
               <div className="flex h-48 justify-center items-center text-xl font-bold">
                 {actualBalance && <Balance balance={actualBalance} />}
               </div>
-              {lastTenTransactions && (
-                <TransactionList transactionList={lastTenTransactions} />
-              )}
+              {lastTenTransactions && <TransactionList transactionList={lastTenTransactions} />}
             </div>
           </div>
         </div>
       </div>
       <div className="flex flex-row justify-center">
-        {/*Show button to see all transactions and operate*/}
+        {/* Show button to see all transactions and operate */}
         <Link
           className="bg-indigo-500 text-white text-center font-bold py-2 px-4 w-2/3 mb-10 rounded-lg hover:bg-indigo-400 md:w-1/2 md:my-10 lg:w-1/4 lg:mb-10"
-          to={`/transaction`}
+          to="/transaction"
         >
-          <button>Ver todos los movimientos</button>
+          <button type="button">Ver todos los movimientos</button>
         </Link>
       </div>
       {/* Show possible errors */}
-      {errorStatus && (
-        <span className="text-red-500 text-sm">Error: {errorStatus}</span>
-      )}
+      {errorStatus && <span className="text-red-500 text-sm">Error: {errorStatus}</span>}
     </div>
   )
 }

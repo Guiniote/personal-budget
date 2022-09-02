@@ -1,9 +1,10 @@
+/* eslint-disable no-useless-escape */
 import React, { useEffect, useState } from 'react'
 import * as Yup from 'yup'
 import UserFormLogin from './UserFormLogin'
 import UserFormRegister from './UserFormRegister'
 
-// This component is to prepare all info needed by Formik for use the form and leave cleaner the form component
+// Component to prepare info needed by Formik for use the form and leave cleaner the form component
 function UserFormStructure({ onSubmitForm, toBeRegister, error }) {
   const [isRegister, setIsRegister] = useState(null)
   const [initialValues, setInitialValues] = useState({
@@ -12,15 +13,14 @@ function UserFormStructure({ onSubmitForm, toBeRegister, error }) {
   })
   const [validationSchema, setValidationSchema] = useState(
     Yup.object({
-      email: Yup.string()
-        .email('Dirección de mail inválida')
-        .required('Obligatorio'),
+      email: Yup.string().email('Dirección de mail inválida').required('Obligatorio'),
       password: Yup.string().required('Obligatorio'),
     }),
   )
 
   useEffect(() => {
-    // If it's a login, I use the default initialValues. If it's an registration, I set the other values needed
+    /* If it's a login, I use the default initialValues.
+    If it's an registration, I set the other values needed */
     if (toBeRegister === 1) {
       setIsRegister(1)
       setInitialValues({
@@ -30,7 +30,8 @@ function UserFormStructure({ onSubmitForm, toBeRegister, error }) {
         passwordConfirm: '',
       })
 
-      // If it's a login, I use the default Yup validation schema. If it's an registration, I set the other values needed
+      /* If it's a login, I use the default Yup validation schema.
+      If it's an registration, I set the other values needed */
       setValidationSchema(
         Yup.object({
           name: Yup.string()
@@ -41,9 +42,7 @@ function UserFormStructure({ onSubmitForm, toBeRegister, error }) {
             .min(3, 'Debe tener al menos 6 caracteres')
             .max(40, 'Debe tener como mucho 40 caracteres')
             .required('Obligatorio'),
-          email: Yup.string()
-            .email('Dirección de mail inválida')
-            .required('Obligatorio'),
+          email: Yup.string().email('Dirección de mail inválida').required('Obligatorio'),
           password: Yup.string()
             .matches(
               /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
